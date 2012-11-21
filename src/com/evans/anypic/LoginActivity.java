@@ -1,5 +1,6 @@
 package com.evans.anypic;
 
+import com.parse.LogInCallback;
 import com.parse.Parse;
 import com.parse.ParseException;
 import com.parse.ParseUser;
@@ -223,7 +224,17 @@ public class LoginActivity extends Activity {
 		@Override
 		protected Boolean doInBackground(Void... params) {
 			// TODO: attempt authentication against a network service.
-			return true;
+			//return true;
+			try {
+				ParseUser user = ParseUser.logIn(mEmail, mPassword);
+				if (user != null)
+					return true;
+			} catch (ParseException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+				return false;
+			}
+			return false;
 			//            try {
 			//                // Simulate network access.
 			//                Thread.sleep(2000);
