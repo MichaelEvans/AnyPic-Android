@@ -11,5 +11,6 @@
     <string name="title_section2">Section 2</string>
     <string name="title_section1">Section 1</string>
     <string name="title_activity_stream">StreamActivity</string>
-
+    <string name="title_activity_capture">CaptureActivity</string>
+	<string name="action_capture">Capture</string>
 </resources>
