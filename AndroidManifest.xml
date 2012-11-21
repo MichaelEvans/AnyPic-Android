@@ -39,6 +39,10 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.evans.anypic.LoginOrRegisterActivity" />
         </activity>
+        <activity
+            android:name="com.evans.anypic.StreamActivity"
+            android:label="@string/title_activity_stream" >
+        </activity>
     </application>
 
 </manifest>
