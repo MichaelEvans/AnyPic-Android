@@ -1,27 +1,38 @@
 package com.evans.anypic;
 
-import android.app.ActionBar;
-import android.os.Bundle;
+import java.io.File;
 
+import android.app.ActionBar;
+import android.content.Intent;
+import android.net.Uri;
+import android.os.Bundle;
+import android.os.Environment;
+import android.provider.MediaStore;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
-import android.support.v4.app.NavUtils;
+import android.support.v4.widget.StaggeredGridView;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.MenuItem.OnMenuItemClickListener;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.TextView;
+import android.widget.Toast;
 
 public class StreamActivity extends FragmentActivity implements
-		ActionBar.OnNavigationListener {
+ActionBar.OnNavigationListener {
 
 	/**
 	 * The serialization (saved instance state) Bundle key representing the
 	 * current dropdown position.
 	 */
+	StaggeredGridView mSGV;
+	SGVAdapter mAdapter;
+
 	private static final String STATE_SELECTED_NAVIGATION_ITEM = "selected_navigation_item";
 
 	@Override
@@ -36,13 +47,18 @@ public class StreamActivity extends FragmentActivity implements
 
 		// Set up the dropdown list navigation in the action bar.
 		actionBar.setListNavigationCallbacks(
-		// Specify a SpinnerAdapter to populate the dropdown list.
+				// Specify a SpinnerAdapter to populate the dropdown list.
 				new ArrayAdapter<String>(actionBar.getThemedContext(),
 						android.R.layout.simple_list_item_1,
 						android.R.id.text1, new String[] {
-								getString(R.string.title_section1),
-								getString(R.string.title_section2),
-								getString(R.string.title_section3), }), this);
+					getString(R.string.title_section1),
+					getString(R.string.title_section2),
+					getString(R.string.title_section3), }), this);
+
+		// mSGV = (StaggeredGridView) findViewById(R.id.grid);
+		// mSGV.setColumnCount(4);
+		// mAdapter = new SGVAdapter(this, mSGV);
+		// mSGV.setAdapter(mAdapter);
 	}
 
 	@Override
@@ -68,6 +84,28 @@ public class StreamActivity extends FragmentActivity implements
 		return true;
 	}
 
+//	@Override
+//	public boolean onOptionsItemSelected(MenuItem item) {
+//		switch (item.getItemId()) {
+//		case R.menu.activity_capture:
+//			Intent i = new Intent(this, CaptureActivity.class);
+//			startActivity(i);
+//			return true;
+//		default:
+//            return super.onOptionsItemSelected(item);
+//		}
+//	}
+	
+	public boolean onOptionsItemSelected(MenuItem item) {
+		switch (item.getItemId()) {
+		case R.id.menu_capture:
+			Log.e("StreamActivity", "Clicked Capture");
+			Intent i = new Intent(this, CaptureActivity.class);
+			startActivity(i);
+		}
+		return super.onOptionsItemSelected(item);
+	}
+
 	@Override
 	public boolean onNavigationItemSelected(int position, long id) {
 		// When the given dropdown item is selected, show its contents in the
@@ -77,7 +115,7 @@ public class StreamActivity extends FragmentActivity implements
 		args.putInt(DummySectionFragment.ARG_SECTION_NUMBER, position + 1);
 		fragment.setArguments(args);
 		getSupportFragmentManager().beginTransaction()
-				.replace(R.id.container, fragment).commit();
+			.replace(R.id.container, fragment).commit();
 		return true;
 	}
 
@@ -107,5 +145,7 @@ public class StreamActivity extends FragmentActivity implements
 			return textView;
 		}
 	}
+
+	
 
 }
