@@ -24,11 +24,20 @@
         </activity>
         <activity
             android:name="com.evans.anypic.LoginOrRegisterActivity"
-            android:label="@string/app_name">
+            android:label="@string/app_name" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
+        </activity>
+        <activity
+            android:name="com.evans.anypic.RegisterActivity"
+            android:label="@string/title_activity_register"
+            android:parentActivityName="com.evans.anypic.LoginOrRegisterActivity" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.evans.anypic.LoginOrRegisterActivity" />
         </activity>
     </application>
 
