@@ -1,10 +1,17 @@
 package com.evans.anypic;
 
-import android.os.Bundle;
+import com.parse.Parse;
+import com.parse.ParseUser;
+
 import android.app.Activity;
+import android.content.Intent;
+import android.os.Bundle;
+import android.support.v4.app.NavUtils;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.support.v4.app.NavUtils;
+import android.view.View;
+import android.widget.Button;
 
 public class LoginOrRegisterActivity extends Activity {
 
@@ -12,8 +19,25 @@ public class LoginOrRegisterActivity extends Activity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_login_or_register);
+		
+		Parse.initialize(this, "BII77Lso2wqjLSThScrTLqUTq6DQ8hhPMxX9C6sn", "0wRgjMrQNw4HPCWzwDrlAKytmwTy50luntP5o960");
+
+		ParseUser user = ParseUser.getCurrentUser();
+		if(user != null){
+			Log.i("LoginActivity", "We're in!");
+		}
+		
+		
 		// Show the Up button in the action bar.
-		getActionBar().setDisplayHomeAsUpEnabled(true);
+		Button goToLogin = (Button) findViewById(R.id.button1);
+		goToLogin.setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View view) {
+				Intent intent = new Intent(LoginOrRegisterActivity.this, LoginActivity.class);
+			    startActivity(intent);
+			}
+		});
+		Button goToRegister = (Button) findViewById(R.id.button2);
 	}
 
 	@Override

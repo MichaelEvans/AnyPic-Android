@@ -60,15 +60,9 @@ public class LoginActivity extends Activity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 
-		Parse.initialize(this, "BII77Lso2wqjLSThScrTLqUTq6DQ8hhPMxX9C6sn", "0wRgjMrQNw4HPCWzwDrlAKytmwTy50luntP5o960");
-
-		ParseUser user = ParseUser.getCurrentUser();
-		if(user != null){
-			Log.i("LoginActivity", "We're in!");
-		}
-
 		setContentView(R.layout.activity_login);
 
+		getActionBar().setDisplayHomeAsUpEnabled(true);
 		// Set up the login form.
 		mEmail = getIntent().getStringExtra(EXTRA_EMAIL);
 		mEmailView = (EditText) findViewById(R.id.email);
