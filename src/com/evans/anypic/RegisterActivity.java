@@ -1,11 +1,9 @@
 package com.evans.anypic;
 
-import com.parse.ParseException;
-import com.parse.ParseUser;
-import com.parse.SignUpCallback;
-
-import android.os.Bundle;
 import android.app.Activity;
+import android.content.Intent;
+import android.os.Bundle;
+import android.support.v4.app.NavUtils;
 import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -13,7 +11,10 @@ import android.view.View;
 import android.view.inputmethod.EditorInfo;
 import android.widget.EditText;
 import android.widget.TextView;
-import android.support.v4.app.NavUtils;
+
+import com.parse.ParseException;
+import com.parse.ParseUser;
+import com.parse.SignUpCallback;
 
 public class RegisterActivity extends Activity {
 	private EditText mUsernameView;
@@ -22,19 +23,19 @@ public class RegisterActivity extends Activity {
 	private View mLoginFormView;
 	private View mLoginStatusView;
 	private TextView mLoginStatusMessageView;
-	
+
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_register);
 		// Show the Up button in the action bar.
 		getActionBar().setDisplayHomeAsUpEnabled(true);
-		
+
 		// Set up the login form.
 		//mEmail = getIntent().getStringExtra(EXTRA_EMAIL);
 		mUsernameView = (EditText) findViewById(R.id.username);
 		mEmailView = (EditText) findViewById(R.id.email);
-		
+
 		//mEmailView.setText(mEmail);
 
 		mPasswordView = (EditText) findViewById(R.id.password);
@@ -59,27 +60,29 @@ public class RegisterActivity extends Activity {
 				attemptRegister();
 			}
 
-			
+
 		});
 	}
-	
+
 	private void attemptRegister() {
 		// TODO Auto-generated method stub
 		ParseUser user = new ParseUser();
 		user.setUsername(mUsernameView.getText().toString());
 		user.setPassword(mPasswordView.getText().toString());
 		user.setEmail(mEmailView.getText().toString());
-		
+
 		user.signUpInBackground(new SignUpCallback() {
-			
+
 			@Override
 			public void done(ParseException arg0) {
 				// TODO Auto-generated method stub
-				
+				Intent intent = new Intent(RegisterActivity.this, StreamActivity.class);
+	            startActivity(intent);
+	            finish();
 			}
 		});
 	}
-	
+
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 		// Inflate the menu; this adds items to the action bar if it is present.
