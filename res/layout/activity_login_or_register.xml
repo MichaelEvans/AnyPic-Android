@@ -20,7 +20,7 @@
         android:layout_marginBottom="23dp"
         android:layout_marginRight="17dp"
         android:layout_toLeftOf="@+id/textView1"
-        android:text="Login" />
+        android:text="@string/login_string" />
 
     <Button
         android:id="@+id/button2"
@@ -29,6 +29,6 @@
         android:layout_alignBottom="@+id/button1"
         android:layout_alignLeft="@+id/textView1"
         android:layout_marginLeft="50dp"
-        android:text="Register" />
+        android:text="@string/register_string" />
 
 </RelativeLayout>

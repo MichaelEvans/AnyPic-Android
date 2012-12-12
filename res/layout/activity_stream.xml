@@ -16,50 +16,59 @@
         <!-- android:layout_height="match_parent" /> -->
 
         <com.evans.anypic.NowLayout
+            android:id="@+id/nowLayout"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:background="#e3e3e3"
             android:orientation="vertical" >
 
-            <TextView
+            <ImageView 
                 android:id="@+id/txtView"
                 style="@style/nowCardStyle"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="@string/hello_world"
-                tools:context=".MainActivity" />
+                android:src="@drawable/ic_launcher"
+                />
+            
+<!--             <TextView -->
+<!--                 android:id="@+id/txtView" -->
+<!--                 style="@style/nowCardStyle" -->
+<!--                 android:layout_width="match_parent" -->
+<!--                 android:layout_height="wrap_content" -->
+<!--                 android:text="@string/hello_world" -->
+<!--                 tools:context=".MainActivity" /> -->
 
-            <TextView
-                android:id="@+id/txtView"
-                style="@style/nowCardStyle"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="@string/hello_world"
-                tools:context=".MainActivity" />
+<!--             <TextView -->
+<!--                 android:id="@+id/txtView" -->
+<!--                 style="@style/nowCardStyle" -->
+<!--                 android:layout_width="match_parent" -->
+<!--                 android:layout_height="wrap_content" -->
+<!--                 android:text="@string/hello_world" -->
+<!--                 tools:context=".MainActivity" /> -->
 
-            <TextView
-                android:id="@+id/txtView"
-                style="@style/nowCardStyle"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="@string/hello_world"
-                tools:context=".MainActivity" />
+<!--             <TextView -->
+<!--                 android:id="@+id/txtView" -->
+<!--                 style="@style/nowCardStyle" -->
+<!--                 android:layout_width="match_parent" -->
+<!--                 android:layout_height="wrap_content" -->
+<!--                 android:text="@string/hello_world" -->
+<!--                 tools:context=".MainActivity" /> -->
 
-            <TextView
-                android:id="@+id/txtView"
-                style="@style/nowCardStyle"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="@string/hello_world"
-                tools:context=".MainActivity" />
+<!--             <TextView -->
+<!--                 android:id="@+id/txtView" -->
+<!--                 style="@style/nowCardStyle" -->
+<!--                 android:layout_width="match_parent" -->
+<!--                 android:layout_height="wrap_content" -->
+<!--                 android:text="@string/hello_world" -->
+<!--                 tools:context=".MainActivity" /> -->
 
-            <TextView
-                android:id="@+id/txtView"
-                style="@style/nowCardStyle"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="@string/hello_world"
-                tools:context=".MainActivity" />
+<!--             <TextView -->
+<!--                 android:id="@+id/txtView" -->
+<!--                 style="@style/nowCardStyle" -->
+<!--                 android:layout_width="match_parent" -->
+<!--                 android:layout_height="wrap_content" -->
+<!--                 android:text="@string/hello_world" -->
+<!--                 tools:context=".MainActivity" /> -->
         </com.evans.anypic.NowLayout>
     </ScrollView>
 
