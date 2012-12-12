@@ -1,11 +1,5 @@
 package com.evans.anypic;
 
-import com.parse.LogInCallback;
-import com.parse.Parse;
-import com.parse.ParseException;
-import com.parse.ParseUser;
-import com.parse.SignUpCallback;
-
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
 import android.annotation.TargetApi;
@@ -20,9 +14,14 @@ import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.view.inputmethod.EditorInfo;
 import android.widget.EditText;
 import android.widget.TextView;
+
+import com.parse.ParseException;
+import com.parse.ParseUser;
 
 /**
  * Activity which displays a login screen to the user, offering registration as
@@ -125,6 +124,9 @@ public class LoginActivity extends Activity {
 	 * errors are presented and no actual login attempt is made.
 	 */
 	public void attemptLogin() {
+		
+		//TODO: Check for network activity before even bothering.
+		
 		if (mAuthTask != null) {
 			return;
 		}
@@ -226,6 +228,7 @@ public class LoginActivity extends Activity {
 			// TODO: attempt authentication against a network service.
 			//return true;
 			try {
+				Log.w("LoginActivity", mEmail + " " + mPassword);
 				ParseUser user = ParseUser.logIn(mEmail, mPassword);
 				if (user != null)
 					return true;
@@ -262,8 +265,11 @@ public class LoginActivity extends Activity {
 			if (success) {
 				finish();
 			} else {
+				Animation shake = AnimationUtils.loadAnimation(LoginActivity.this, R.anim.shake);
+		        mPasswordView.startAnimation(shake);
 				mPasswordView.setError(getString(R.string.error_incorrect_password));
 				mPasswordView.requestFocus();
+			
 			}
 		}
 
