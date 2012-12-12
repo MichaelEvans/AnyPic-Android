@@ -12,23 +12,26 @@
         android:layout_centerVertical="true"
         android:text="@string/hello_world" />
 
-    <Button
-        android:id="@+id/button1"
-        android:layout_width="wrap_content"
+    <LinearLayout
+        android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
-        android:layout_marginBottom="23dp"
-        android:layout_marginRight="17dp"
-        android:layout_toLeftOf="@+id/textView1"
-        android:text="@string/login_string" />
+        android:layout_marginBottom="2dp"
+        android:orientation="horizontal" >
 
-    <Button
-        android:id="@+id/button2"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignBottom="@+id/button1"
-        android:layout_alignLeft="@+id/textView1"
-        android:layout_marginLeft="50dp"
-        android:text="@string/register_string" />
+        <Button
+            android:id="@+id/button1"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="@string/login_string" />
+
+        <Button
+            android:id="@+id/button2"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="@string/register_string" />
+    </LinearLayout>
 
 </RelativeLayout>
