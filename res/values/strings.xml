@@ -12,7 +12,10 @@
     <string name="title_section1">Feed</string>
     <string name="title_activity_stream">StreamActivity</string>
     <string name="title_activity_capture">CaptureActivity</string>
-	<string name="action_capture">Capture</string>
-	<string name="login_string">Login</string>
-	<string name="register_string">Register</string>
+    <string name="action_capture">Capture</string>
+    <string name="login_string">Login</string>
+    <string name="register_string">Register</string>
+    <string name="menu_logout">Logout</string>
+    <string name="title_activity_photo_details">PhotoDetailsActivity</string>
+
 </resources>

@@ -16,22 +16,34 @@
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
-        android:layout_marginBottom="2dp"
-        android:orientation="horizontal" >
+        android:orientation="horizontal"
+        android:padding="10dp" >
 
         <Button
             android:id="@+id/button1"
+            style="@style/ShadowText"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="@string/login_string" />
+            android:background="@drawable/button_background_states"
+            android:layout_marginRight="5dp"
+            android:text="@string/login_string"
+            android:textColor="@color/text"
+            android:textSize="20sp"
+            android:textStyle="bold" />
 
         <Button
             android:id="@+id/button2"
+            style="@style/ShadowText"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="@string/register_string" />
+            android:layout_marginLeft="5dp"
+            android:background="@drawable/button_background_states"
+            android:text="@string/register_string"
+            android:textColor="@color/text"
+            android:textSize="20sp"
+            android:textStyle="bold" />
     </LinearLayout>
 
 </RelativeLayout>
