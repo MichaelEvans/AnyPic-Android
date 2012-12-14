@@ -2,11 +2,17 @@
     xmlns:tools="http://schemas.android.com/tools"
     tools:context=".LoginActivity" >
 
-    <LinearLayout
-            style="@style/LoginFormContainer"
-            android:orientation="vertical" android:layout_gravity="center" >
+    <ScrollView
+        android:id="@+id/register_form"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" >
 
-        	<EditText
+        <LinearLayout
+            style="@style/LoginFormContainer"
+            android:layout_gravity="center"
+            android:orientation="vertical" >
+
+            <EditText
                 android:id="@+id/username"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -14,7 +20,7 @@
                 android:inputType="textNoSuggestions"
                 android:maxLines="1"
                 android:singleLine="true" />
-        	
+
             <EditText
                 android:id="@+id/email"
                 android:layout_width="match_parent"
@@ -38,13 +44,19 @@
 
             <Button
                 android:id="@+id/sign_in_button"
+                style="@style/ShadowText"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="right"
                 android:layout_marginTop="16dp"
+                android:background="@drawable/button_background_states"
                 android:paddingLeft="32dp"
                 android:paddingRight="32dp"
-                android:text="@string/action_sign_register" />
+                android:text="@string/action_sign_register"
+                android:textColor="@color/text"
+                android:textSize="20sp"
+                android:textStyle="bold" />
         </LinearLayout>
+    </ScrollView>
 
 </merge>

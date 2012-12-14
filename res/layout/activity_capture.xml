@@ -9,7 +9,8 @@
         android:id="@+id/image_preview"
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
-        android:layout_above="@+id/image_caption" />
+        android:layout_above="@+id/image_caption"
+        android:scaleType="centerCrop" />
 
     <EditText
         android:id="@+id/image_caption"

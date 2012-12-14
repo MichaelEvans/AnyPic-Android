@@ -9,7 +9,8 @@
     <ImageView
         android:id="@+id/imageView1"
         android:layout_width="match_parent"
-        android:layout_height="100dp"
+        android:layout_height="200dp"
+        android:scaleType="centerCrop"
         android:src="@android:color/holo_green_light" />
 
     <TextView

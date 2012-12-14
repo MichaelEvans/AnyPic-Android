@@ -33,7 +33,7 @@ public class LoginOrRegisterActivity extends Activity {
 		Parse.initialize(this, "BII77Lso2wqjLSThScrTLqUTq6DQ8hhPMxX9C6sn", "0wRgjMrQNw4HPCWzwDrlAKytmwTy50luntP5o960");
 		PushService.subscribe(this, "", LoginOrRegisterActivity.class);
 		
-		ParseUser user = ParseUser.getCurrentUser();
+		final ParseUser user = ParseUser.getCurrentUser();
 		if(user != null){
 			Log.i("LoginActivity", "We're in!");
 			Intent intent = new Intent(LoginOrRegisterActivity.this, StreamActivity.class);
@@ -49,6 +49,9 @@ public class LoginOrRegisterActivity extends Activity {
 			public void onClick(View view) {
 				Intent intent = new Intent(LoginOrRegisterActivity.this, LoginActivity.class);
 			    startActivity(intent);
+			    if(user != null){
+			    	finish();
+			    }
 			}
 		});
 		Button goToRegister = (Button) findViewById(R.id.button2);
@@ -57,6 +60,9 @@ public class LoginOrRegisterActivity extends Activity {
 			public void onClick(View view) {
 				Intent intent = new Intent(LoginOrRegisterActivity.this, RegisterActivity.class);
 			    startActivity(intent);
+			    if(user != null){
+			    	finish();
+			    }
 			}
 		});
 	}

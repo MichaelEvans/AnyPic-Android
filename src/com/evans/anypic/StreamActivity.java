@@ -1,27 +1,36 @@
 package com.evans.anypic;
 
-import java.io.File;
+import java.util.ArrayList;
+import java.util.List;
 
 import android.app.ActionBar;
 import android.content.Intent;
-import android.net.Uri;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.graphics.Color;
 import android.os.Bundle;
-import android.os.Environment;
-import android.provider.MediaStore;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.widget.StaggeredGridView;
+import android.util.AttributeSet;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.MenuItem.OnMenuItemClickListener;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
+
+import com.parse.FindCallback;
+import com.parse.GetDataCallback;
+import com.parse.ParseException;
+import com.parse.ParseFile;
+import com.parse.ParseObject;
+import com.parse.ParseQuery;
+import com.parse.ParseUser;
 
 public class StreamActivity extends FragmentActivity implements
 ActionBar.OnNavigationListener {
@@ -32,6 +41,8 @@ ActionBar.OnNavigationListener {
 	 */
 	StaggeredGridView mSGV;
 	SGVAdapter mAdapter;
+	//private NowLayout nowLayout;
+	private ImageView test;
 
 	private static final String STATE_SELECTED_NAVIGATION_ITEM = "selected_navigation_item";
 
@@ -40,6 +51,8 @@ ActionBar.OnNavigationListener {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_stream);
 
+		//nowLayout = (NowLayout) findViewById(R.id.nowLayout);
+		//test = (ImageView) findViewById(R.id.txtView);
 		// Set up the action bar to show a dropdown list.
 		final ActionBar actionBar = getActionBar();
 		actionBar.setDisplayShowTitleEnabled(false);
@@ -55,10 +68,60 @@ ActionBar.OnNavigationListener {
 					getString(R.string.title_section2),
 					getString(R.string.title_section3), }), this);
 
-		// mSGV = (StaggeredGridView) findViewById(R.id.grid);
-		// mSGV.setColumnCount(4);
-		// mAdapter = new SGVAdapter(this, mSGV);
-		// mSGV.setAdapter(mAdapter);
+		mSGV = (StaggeredGridView) findViewById(R.id.grid);
+		mSGV.setColumnCount(4);
+//		mAdapter = new SGVAdapter(StreamActivity.this, mSGV);
+//		mSGV.setAdapter(mAdapter);
+		//Gonna need a progress bar.
+		ParseUser currentUser = ParseUser.getCurrentUser();
+		ParseQuery query = new ParseQuery("Photo");
+		query.whereEqualTo("ACL", currentUser.getACL());
+		final ArrayList<String> bitmapList = new ArrayList<String>();
+		System.out.println("Bitmap List " + bitmapList.size());
+		mAdapter = new SGVAdapter(StreamActivity.this, mSGV, bitmapList);
+		mSGV.setAdapter(mAdapter);
+		
+//		mAdapter.notifyDataSetChanged();
+		query.findInBackground(new FindCallback() {
+			public void done(List<ParseObject> scoreList, ParseException e) {
+				
+				if (e == null) {
+					Log.d("score", "Retrieved " + scoreList.size() + " scores");
+					
+					for(ParseObject object : scoreList){
+						
+						ParseFile imageFile = (ParseFile)object.get("imageFile");
+						bitmapList.add(imageFile.getUrl());
+						System.out.println(bitmapList);
+						mAdapter.setBitmaps(bitmapList);
+						mAdapter.notifyDataSetChanged();
+						
+//						imageFile.getDataInBackground(new GetDataCallback() {
+//							public void done(byte[] data, ParseException e) {
+//								if (e == null) {
+//									Bitmap bMap = BitmapFactory.decodeByteArray(data, 0, data.length);
+//									Log.d("Stream", "Bitmap" + bMap.toString());
+//									System.out.println(bMap);
+//									//test.setImageBitmap(bMap);
+//									//bitmapList.add(bMap);
+////									mSGV.
+//								} else {
+//									// something went wrong
+//									System.out.println("Something went wrong.");
+//								}
+//							}
+//						});
+					}
+					
+//					mAdapter.setBitmaps(bitmapList);
+
+					System.out.println("Adding View");
+					//nowLayout.addView(iv);
+				} else {
+					Log.d("score", "Error: " + e.getMessage());
+				}
+			}
+		});
 	}
 
 	@Override
@@ -84,25 +147,37 @@ ActionBar.OnNavigationListener {
 		return true;
 	}
 
-//	@Override
-//	public boolean onOptionsItemSelected(MenuItem item) {
-//		switch (item.getItemId()) {
-//		case R.menu.activity_capture:
-//			Intent i = new Intent(this, CaptureActivity.class);
-//			startActivity(i);
-//			return true;
-//		default:
-//            return super.onOptionsItemSelected(item);
-//		}
-//	}
-	
+	// @Override
+	// public boolean onOptionsItemSelected(MenuItem item) {
+	// switch (item.getItemId()) {
+	// case R.menu.activity_capture:
+	// Intent i = new Intent(this, CaptureActivity.class);
+	// startActivity(i);
+	// return true;
+	// default:
+	// return super.onOptionsItemSelected(item);
+	// }
+	// }
+
 	public boolean onOptionsItemSelected(MenuItem item) {
 		switch (item.getItemId()) {
 		case R.id.menu_capture:
 			Log.e("StreamActivity", "Clicked Capture");
 			Intent i = new Intent(this, CaptureActivity.class);
 			startActivity(i);
+			break;
+		case R.id.menu_logout:
+			ParseUser.logOut();
+			i = new Intent(this, LoginOrRegisterActivity.class);
+			startActivity(i);
+			finish();
+			break;
+		case R.id.menu_settings:
+			i = new Intent(this, SettingsActivity.class);
+			startActivity(i);
+			break;
 		}
+		
 		return super.onOptionsItemSelected(item);
 	}
 
@@ -115,7 +190,7 @@ ActionBar.OnNavigationListener {
 		args.putInt(DummySectionFragment.ARG_SECTION_NUMBER, position + 1);
 		fragment.setArguments(args);
 		getSupportFragmentManager().beginTransaction()
-			.replace(R.id.container, fragment).commit();
+		.replace(R.id.container, fragment).commit();
 		return true;
 	}
 
@@ -140,12 +215,10 @@ ActionBar.OnNavigationListener {
 			// number argument value.
 			TextView textView = new TextView(getActivity());
 			textView.setGravity(Gravity.CENTER);
-			textView.setText(Integer.toString(getArguments().getInt(
-					ARG_SECTION_NUMBER)));
+			//			textView.setText(Integer.toString(getArguments().getInt(
+			//					ARG_SECTION_NUMBER)));
 			return textView;
 		}
 	}
-
-	
 
 }

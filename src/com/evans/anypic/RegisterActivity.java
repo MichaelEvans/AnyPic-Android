@@ -70,7 +70,7 @@ public class RegisterActivity extends Activity {
 		user.setUsername(mUsernameView.getText().toString());
 		user.setPassword(mPasswordView.getText().toString());
 		user.setEmail(mEmailView.getText().toString());
-
+		
 		user.signUpInBackground(new SignUpCallback() {
 
 			@Override

@@ -50,6 +50,7 @@ public class LoginActivity extends Activity {
 	// Values for email and password at the time of the login attempt.
 	private String mEmail;
 	private String mPassword;
+	private String mUsername;
 
 	// UI references.
 	private EditText mEmailView;
@@ -115,6 +116,7 @@ public class LoginActivity extends Activity {
 			//
 			NavUtils.navigateUpFromSameTask(this);
 			return true;
+			//TODO: Recover Lost Password
 		}
 		return super.onOptionsItemSelected(item);
 	}
@@ -136,7 +138,7 @@ public class LoginActivity extends Activity {
 		mPasswordView.setError(null);
 
 		// Store values at the time of the login attempt.
-		mEmail = mEmailView.getText().toString();
+		mUsername = mEmailView.getText().toString();
 		mPassword = mPasswordView.getText().toString();
 
 		boolean cancel = false;
@@ -158,11 +160,12 @@ public class LoginActivity extends Activity {
 			mEmailView.setError(getString(R.string.error_field_required));
 			focusView = mEmailView;
 			cancel = true;
-		} else if (!mEmail.contains("@")) {
-			mEmailView.setError(getString(R.string.error_invalid_email));
-			focusView = mEmailView;
-			cancel = true;
 		}
+//		} else if (!mEmail.contains("@")) {
+//			mEmailView.setError(getString(R.string.error_invalid_email));
+//			focusView = mEmailView;
+//			cancel = true;
+//		}
 
 		if (cancel) {
 			// There was an error; don't attempt login and focus the first
@@ -228,8 +231,8 @@ public class LoginActivity extends Activity {
 			// TODO: attempt authentication against a network service.
 			//return true;
 			try {
-				Log.w("LoginActivity", mEmail + " " + mPassword);
-				ParseUser user = ParseUser.logIn(mEmail, mPassword);
+				Log.w("LoginActivity", mUsername + " " + mPassword);
+				ParseUser user = ParseUser.logIn(mUsername, mPassword);
 				if (user != null)
 					return true;
 			} catch (ParseException e) {
