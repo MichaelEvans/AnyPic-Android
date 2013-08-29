@@ -34,5 +34,6 @@
     <color name="text_shadow">#000000</color>
 
     <color name="background_selected">#1fb6ed</color>
+    <color name="grey">#FFDDDDDD</color>
 
 </resources>

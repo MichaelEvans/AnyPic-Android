@@ -2,26 +2,33 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="@drawable/bg_white_box"
     android:orientation="vertical"
-    android:padding="2dp" >
+    android:padding="10dp" >
 
-    <ImageView
-        android:id="@+id/imageView1"
+    <LinearLayout
+        style="@style/streamCards"
         android:layout_width="match_parent"
-        android:layout_height="200dp"
-        android:scaleType="centerCrop"
-        android:src="@android:color/holo_green_light" />
+        android:layout_height="wrap_content"
+        android:orientation="vertical" >
 
-    <TextView
-        android:id="@+id/textView1"
-        android:layout_width="match_parent"
-        android:layout_height="56dp"
-        android:layout_margin="8dp"
-        android:drawableRight="@android:drawable/ic_menu_info_details"
-        android:gravity="center_vertical"
-        android:lines="2"
-        android:text="List Item text here, image above"
-        android:textAppearance="?android:attr/textAppearance" />
+        <ImageView
+            android:id="@+id/imageView1"
+            android:layout_width="match_parent"
+            android:layout_height="300dp"
+            android:scaleType="centerCrop"
+            android:src="@android:color/holo_green_light" />
+
+        <TextView
+            android:id="@+id/textView1"
+            android:layout_width="match_parent"
+            android:layout_height="56dp"
+            android:layout_margin="8dp"
+            android:background="@android:color/black"
+            android:drawableRight="@android:drawable/ic_menu_info_details"
+            android:gravity="center_vertical"
+            android:lines="2"
+            android:text="List Item text here, image above"
+            android:textAppearance="?android:attr/textAppearance" />
+    </LinearLayout>
 
 </LinearLayout>

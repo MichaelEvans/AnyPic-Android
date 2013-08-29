@@ -42,4 +42,9 @@
         <item name="android:shadowDy">1</item>
         <item name="android:shadowRadius">1</item>
     </style>
+    
+    <style name="streamCards">
+        <item name="android:background">@drawable/search_bg_shadow</item>
+        <item name="android:gravity">center</item>
+    </style>
 </resources>
