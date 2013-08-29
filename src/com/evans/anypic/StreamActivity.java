@@ -22,8 +22,11 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
+import android.widget.ListView;
 import android.widget.TextView;
 
+import com.evans.model.Activity;
+import com.evans.model.Photo;
 import com.parse.FindCallback;
 import com.parse.GetDataCallback;
 import com.parse.ParseException;
@@ -39,8 +42,10 @@ ActionBar.OnNavigationListener {
 	 * The serialization (saved instance state) Bundle key representing the
 	 * current dropdown position.
 	 */
-	StaggeredGridView mSGV;
-	SGVAdapter mAdapter;
+	ListView mListView;
+	private StreamAdapter mAdapter;
+	//SGVAdapter mAdapter;
+	private ParseUser mCurrentUser;
 	//private NowLayout nowLayout;
 	private ImageView test;
 
@@ -68,60 +73,103 @@ ActionBar.OnNavigationListener {
 					getString(R.string.title_section2),
 					getString(R.string.title_section3), }), this);
 
-		mSGV = (StaggeredGridView) findViewById(R.id.grid);
-		mSGV.setColumnCount(4);
+		mListView = (ListView) findViewById(R.id.grid);
+		mAdapter = new StreamAdapter(this, new ArrayList<Photo>());
+		mListView.setAdapter(mAdapter);
 //		mAdapter = new SGVAdapter(StreamActivity.this, mSGV);
 //		mSGV.setAdapter(mAdapter);
 		//Gonna need a progress bar.
-		ParseUser currentUser = ParseUser.getCurrentUser();
-		ParseQuery query = new ParseQuery("Photo");
-		query.whereEqualTo("ACL", currentUser.getACL());
-		final ArrayList<String> bitmapList = new ArrayList<String>();
-		System.out.println("Bitmap List " + bitmapList.size());
-		mAdapter = new SGVAdapter(StreamActivity.this, mSGV, bitmapList);
-		mSGV.setAdapter(mAdapter);
+		mCurrentUser = ParseUser.getCurrentUser();
+		// Query for the friends the current user is following
+		
+		
+//		followingActivitiesQuery.whereEqualTo("ACL", currentUser.getACL());
+//		final ArrayList<String> bitmapList = new ArrayList<String>();
+//		System.out.println("Bitmap List " + bitmapList.size());
+		
 		
 //		mAdapter.notifyDataSetChanged();
-		query.findInBackground(new FindCallback() {
-			public void done(List<ParseObject> scoreList, ParseException e) {
-				
-				if (e == null) {
-					Log.d("score", "Retrieved " + scoreList.size() + " scores");
-					
-					for(ParseObject object : scoreList){
-						
-						ParseFile imageFile = (ParseFile)object.get("imageFile");
-						bitmapList.add(imageFile.getUrl());
-						System.out.println(bitmapList);
-						mAdapter.setBitmaps(bitmapList);
-						mAdapter.notifyDataSetChanged();
-						
-//						imageFile.getDataInBackground(new GetDataCallback() {
-//							public void done(byte[] data, ParseException e) {
-//								if (e == null) {
-//									Bitmap bMap = BitmapFactory.decodeByteArray(data, 0, data.length);
-//									Log.d("Stream", "Bitmap" + bMap.toString());
-//									System.out.println(bMap);
-//									//test.setImageBitmap(bMap);
-//									//bitmapList.add(bMap);
-////									mSGV.
-//								} else {
-//									// something went wrong
-//									System.out.println("Something went wrong.");
-//								}
-//							}
-//						});
-					}
-					
-//					mAdapter.setBitmaps(bitmapList);
-
-					System.out.println("Adding View");
-					//nowLayout.addView(iv);
-				} else {
-					Log.d("score", "Error: " + e.getMessage());
+//		query.findInBackground(new FindCallback() {
+//			public void done(List<ParseObject> scoreList, ParseException e) {
+//				
+//				if (e == null) {
+//					Log.d("score", "Retrieved " + scoreList.size() + " scores");
+//					
+//					for(ParseObject object : scoreList){
+//						
+//						ParseFile imageFile = (ParseFile)object.get("imageFile");
+//						bitmapList.add(imageFile.getUrl());
+//						System.out.println(bitmapList);
+//						mAdapter.setBitmaps(bitmapList);
+//						mAdapter.notifyDataSetChanged();
+//						
+////						imageFile.getDataInBackground(new GetDataCallback() {
+////							public void done(byte[] data, ParseException e) {
+////								if (e == null) {
+////									Bitmap bMap = BitmapFactory.decodeByteArray(data, 0, data.length);
+////									Log.d("Stream", "Bitmap" + bMap.toString());
+////									System.out.println(bMap);
+////									//test.setImageBitmap(bMap);
+////									//bitmapList.add(bMap);
+//////									mSGV.
+////								} else {
+////									// something went wrong
+////									System.out.println("Something went wrong.");
+////								}
+////							}
+////						});
+//					}
+//					
+////					mAdapter.setBitmaps(bitmapList);
+//
+//					System.out.println("Adding View");
+//					//nowLayout.addView(iv);
+//				} else {
+//					Log.d("score", "Error: " + e.getMessage());
+//				}
+//			}
+//		});
+	}
+	
+	protected void onResume(){
+		super.onResume();
+		
+		ParseQuery<Photo> photoQuery = buildParseQuery();
+		photoQuery.findInBackground(new FindCallback<Photo>() {
+			@Override
+			public void done(List<Photo> photos, ParseException error) {
+				Log.e("PhotoLoad", "Loaded " + photos.size() + " photos.");
+				if(photos != null){
+					mAdapter.clear();
+					mAdapter.addAll(photos);
+					mAdapter.notifyDataSetChanged();
 				}
 			}
 		});
+	}
+
+	private ParseQuery<Photo> buildParseQuery() {
+		ParseQuery<Activity> followingActivitiesQuery = ParseQuery.getQuery(Activity.class);
+		followingActivitiesQuery.whereEqualTo("type", Activity.FOLLOW);
+		followingActivitiesQuery.whereEqualTo("fromUser", mCurrentUser);
+		
+		// Using the activities from the query above, we find all of the photos taken by
+	    // the friends the current user is following
+		ParseQuery<Photo> photosFromFollowedUsersQuery = ParseQuery.getQuery(Photo.class);
+		photosFromFollowedUsersQuery.whereMatchesKeyInQuery("user", "toUser", followingActivitiesQuery);
+		photosFromFollowedUsersQuery.whereExists("image");
+		
+		ParseQuery<Photo> photosFromCurrentUserQuery = ParseQuery.getQuery(Photo.class);
+		photosFromCurrentUserQuery.whereEqualTo("user", mCurrentUser);
+		photosFromCurrentUserQuery.whereExists("image");
+		
+		ArrayList<ParseQuery<Photo>> queries = new ArrayList<ParseQuery<Photo>>();
+		queries.add(photosFromFollowedUsersQuery);
+		queries.add(photosFromCurrentUserQuery);
+		ParseQuery<Photo> query = ParseQuery.or(queries);
+		query.include("user");
+		query.orderByDescending("createdAt");
+		return query;
 	}
 
 	@Override

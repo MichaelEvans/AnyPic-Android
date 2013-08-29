@@ -26,6 +26,7 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ImageView.ScaleType;
 
+import com.evans.model.Photo;
 import com.parse.ParseACL;
 import com.parse.ParseException;
 import com.parse.ParseFile;
@@ -70,8 +71,9 @@ public class CaptureActivity extends Activity {
 			@Override
 			public void onClick(View v) {
 				imageView.setEnabled(false);
-				final ParseObject image = new ParseObject("Photo");
+				final Photo image = new Photo();
 				image.setACL(new ParseACL(ParseUser.getCurrentUser()));
+				image.setUser(ParseUser.getCurrentUser());
 				image.put("caption", caption.getText().toString());
 				byte[] bytes = null;
 				try {
@@ -101,7 +103,7 @@ public class CaptureActivity extends Activity {
 						@Override
 						public void done(ParseException arg0) {
 							// TODO Auto-generated method stub
-							image.put("imageFile", fileImage);
+							image.setImage(fileImage);
 							//image.put("thumbnailFile", thumbnailImage);
 							image.saveInBackground(new SaveCallback() {
 

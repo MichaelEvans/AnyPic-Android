@@ -32,11 +32,6 @@ public class LoginActivity extends Activity {
 	 * A dummy authentication store containing known user names and passwords.
 	 * TODO: remove after connecting to a real authentication system.
 	 */
-	private static final String[] DUMMY_CREDENTIALS = new String[]{
-		"foo@example.com:hello",
-		"bar@example.com:world"
-	};
-
 	/**
 	 * The default email to populate the email field with.
 	 */
@@ -70,7 +65,7 @@ public class LoginActivity extends Activity {
 		mEmail = getIntent().getStringExtra(EXTRA_EMAIL);
 		mEmailView = (EditText) findViewById(R.id.email);
 		mEmailView.setText(mEmail);
-
+		
 		mPasswordView = (EditText) findViewById(R.id.password);
 		mPasswordView.setOnEditorActionListener(new TextView.OnEditorActionListener() {
 			@Override
@@ -156,11 +151,11 @@ public class LoginActivity extends Activity {
 		}
 
 		// Check for a valid email address.
-		if (TextUtils.isEmpty(mEmail)) {
-			mEmailView.setError(getString(R.string.error_field_required));
-			focusView = mEmailView;
-			cancel = true;
-		}
+//		if (TextUtils.isEmpty(mEmail)) {
+//			mEmailView.setError(getString(R.string.error_field_required));
+//			focusView = mEmailView;
+//			cancel = true;
+//		}
 //		} else if (!mEmail.contains("@")) {
 //			mEmailView.setError(getString(R.string.error_invalid_email));
 //			focusView = mEmailView;

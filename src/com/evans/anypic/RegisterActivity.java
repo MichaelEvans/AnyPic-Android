@@ -12,6 +12,7 @@ import android.view.inputmethod.EditorInfo;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import com.evans.model.User;
 import com.parse.ParseException;
 import com.parse.ParseUser;
 import com.parse.SignUpCallback;
@@ -66,7 +67,7 @@ public class RegisterActivity extends Activity {
 
 	private void attemptRegister() {
 		// TODO Auto-generated method stub
-		ParseUser user = new ParseUser();
+		User user = new User();
 		user.setUsername(mUsernameView.getText().toString());
 		user.setPassword(mPasswordView.getText().toString());
 		user.setEmail(mEmailView.getText().toString());
