@@ -19,7 +19,10 @@ import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.ListView;
@@ -36,7 +39,7 @@ import com.parse.ParseQuery;
 import com.parse.ParseUser;
 
 public class StreamActivity extends FragmentActivity implements
-ActionBar.OnNavigationListener {
+ActionBar.OnNavigationListener, OnItemClickListener {
 
 	/**
 	 * The serialization (saved instance state) Bundle key representing the
@@ -76,6 +79,7 @@ ActionBar.OnNavigationListener {
 		mListView = (ListView) findViewById(R.id.grid);
 		mAdapter = new StreamAdapter(this, new ArrayList<Photo>());
 		mListView.setAdapter(mAdapter);
+		mListView.setOnItemClickListener(this);
 //		mAdapter = new SGVAdapter(StreamActivity.this, mSGV);
 //		mSGV.setAdapter(mAdapter);
 		//Gonna need a progress bar.
@@ -87,48 +91,6 @@ ActionBar.OnNavigationListener {
 //		final ArrayList<String> bitmapList = new ArrayList<String>();
 //		System.out.println("Bitmap List " + bitmapList.size());
 		
-		
-//		mAdapter.notifyDataSetChanged();
-//		query.findInBackground(new FindCallback() {
-//			public void done(List<ParseObject> scoreList, ParseException e) {
-//				
-//				if (e == null) {
-//					Log.d("score", "Retrieved " + scoreList.size() + " scores");
-//					
-//					for(ParseObject object : scoreList){
-//						
-//						ParseFile imageFile = (ParseFile)object.get("imageFile");
-//						bitmapList.add(imageFile.getUrl());
-//						System.out.println(bitmapList);
-//						mAdapter.setBitmaps(bitmapList);
-//						mAdapter.notifyDataSetChanged();
-//						
-////						imageFile.getDataInBackground(new GetDataCallback() {
-////							public void done(byte[] data, ParseException e) {
-////								if (e == null) {
-////									Bitmap bMap = BitmapFactory.decodeByteArray(data, 0, data.length);
-////									Log.d("Stream", "Bitmap" + bMap.toString());
-////									System.out.println(bMap);
-////									//test.setImageBitmap(bMap);
-////									//bitmapList.add(bMap);
-//////									mSGV.
-////								} else {
-////									// something went wrong
-////									System.out.println("Something went wrong.");
-////								}
-////							}
-////						});
-//					}
-//					
-////					mAdapter.setBitmaps(bitmapList);
-//
-//					System.out.println("Adding View");
-//					//nowLayout.addView(iv);
-//				} else {
-//					Log.d("score", "Error: " + e.getMessage());
-//				}
-//			}
-//		});
 	}
 	
 	protected void onResume(){
@@ -267,6 +229,14 @@ ActionBar.OnNavigationListener {
 			//					ARG_SECTION_NUMBER)));
 			return textView;
 		}
+	}
+	
+	@Override
+	public void onItemClick(AdapterView<?> arg0, View arg1, int position, long arg3) {
+		Photo photo = mAdapter.getItem(position);
+		Intent i = new Intent(this, PhotoDetailsActivity.class);
+		i.putExtra("photo", photo.getObjectId());
+		startActivity(i);
 	}
 
 }
