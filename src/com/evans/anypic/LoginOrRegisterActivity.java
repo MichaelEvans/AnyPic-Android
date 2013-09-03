@@ -11,6 +11,7 @@ import com.evans.model.Photo;
 import com.evans.model.User;
 import com.parse.Parse;
 import com.parse.ParseAnalytics;
+import com.parse.ParseFacebookUtils;
 import com.parse.ParseObject;
 import com.parse.ParseUser;
 import com.parse.PushService;
@@ -34,6 +35,7 @@ public class LoginOrRegisterActivity extends Activity {
 		ParseObject.registerSubclass(User.class);
 		ParseObject.registerSubclass(com.evans.model.Activity.class);
 		Parse.initialize(this, "BII77Lso2wqjLSThScrTLqUTq6DQ8hhPMxX9C6sn", "0wRgjMrQNw4HPCWzwDrlAKytmwTy50luntP5o960");
+//		ParseFacebookUtils.initialize("402364443203325");
 		PushService.subscribe(this, "", LoginOrRegisterActivity.class);
 		ParseAnalytics.trackAppOpened(getIntent());
 		
